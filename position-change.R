@@ -79,7 +79,29 @@ change_pos_offense_stats %>%
         strip.text.x = element_text(size = 14, face = "bold"))
 ggsave('3-rec.png', width = 15, height = 10, dpi = "retina")
 
+waa_pos_avgs <- recruiting_with_waa_season %>%
+  group_by(position) %>%
+  summarize(avg_pos_waa = mean(total_waa))
 
+changed_pos_data_waa <- changed_pos_data %>%
+  left_join(waa_pos_avgs, by = c("position"))
+
+changed_pos_data_waa <- changed_pos_data_waa %>%
+  filter(!position %in% c("FB", "P", "K", "ST", "LS")) %>%
+  mutate(waa_oe_pos_avg = total_waa - avg_pos_waa)
+
+changed_pos_data_waa %>%
+  filter(waa_oe_pos_avg < 1.1 & waa_oe_pos_avg > -1.1) %>%
+  ggplot(aes(x = position, y = waa_oe_pos_avg)) +
+  geom_boxplot(aes(fill = position)) +
+  geom_hline(yintercept = 0) +
+  theme_reach() +
+  scale_fill_brewer(palette = "Set3") +
+  labs(x = "Position Played in College",
+       y = "WAA Over Average of That Position",
+       title = "Changing Positions From High School to College is Usually a Losing Bet",
+       subtitle = "No position is harder to transition to than quarterback, WAA = Wins Above Average") 
+ggsave('4-rec.png', width = 15, height = 10, dpi = "retina")
 
 
 
