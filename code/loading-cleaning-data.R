@@ -1,5 +1,8 @@
 library(tidyverse)
 library(ggthemes)
+library(cfbfastR)
+library(ggimage)
+library(ggtext)
 
 theme_reach <- function() {
   theme_fivethirtyeight() +
