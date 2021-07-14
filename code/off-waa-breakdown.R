@@ -82,3 +82,17 @@ height_graph %>%
   theme(strip.text = element_text(size = 14, face = "bold"))
 ggsave('7-rec.png', width = 15, height = 10, dpi = "retina")
 
+rec_lm <- recruiting_with_waa %>%
+  filter(!data.position %in% c("FB", "K", "LS", "P", "K"))
+
+lm <- lm(total_waa ~ data.position + data.pos, data = rec_lm)
+summary(lm)
+
+oline <- recruiting_with_waa %>%
+  filter(data.position %in% c("T", "C", "G"))
+
+lm2 <- lm(total_waa ~ data.position + data.weight + data.rating, data = oline)
+summary(lm2)
+
+
+

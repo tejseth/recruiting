@@ -140,7 +140,9 @@ school_waa_stats <- rec_proj_waa %>%
   left_join(teams_colors_logos, by = c("data.team"))
 
 school_waa_stats <- school_waa_stats %>%
-  mutate(conference = ifelse(data.team == "Notre Dame", "ACC", conference))
+  mutate(conference = ifelse(data.team == "Notre Dame", "ACC", conference),
+         conference = ifelse(data.team == "Army", "Mid-American", conference),
+         conference = ifelse(data.team == "Navy", "Mid-American", conference))
 
 p_5 <- c("SEC", "Pac-12", "Big 12", "ACC", "Big Ten")
 g_5 <- c("American Athletic", "Conference USA", "Mid-American", "Mountain West", "Sun Belt")
