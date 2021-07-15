@@ -112,6 +112,8 @@ ridge_preds = as.numeric(predict(ridge_model, newx = model_matrix_x))
 
 rec_proj_waa <- cbind(rec_join, ridge_preds)
 
+rec_proj_waa <- rec_proj_waa %>% distinct(data.player, data.player_id, .keep_all = TRUE)
+
 teams_colors_logos <- read_csv("https://raw.githubusercontent.com/saiemgilani/cfbfastR-data/master/teams/teams_colors_logos.csv")
 
 teams_colors_logos <- teams_colors_logos %>%
@@ -124,7 +126,7 @@ teams_colors_logos <- teams_colors_logos %>%
     school == "NC State" ~ "North Carolina State",
     school == "Southern Mississippi" ~ "Southern Miss",
     school == "South Florida" ~ "USF",
-    school == "UT San Antonio" ~ "UTSA"
+    school == "UT San Antonio" ~ "UTSA",
     TRUE ~ school
   ))
 
@@ -164,8 +166,7 @@ p5_waa %>%
   theme(plot.title = element_markdown(size = 20, hjust = 0.5, face = "bold"),
         plot.subtitle = element_text(size = 13, hjust = 0.5),
         axis.title.x = element_markdown(size=16),
-        axis.title.y = element_markdown(size=16),
-        axis.text = element_markdown(size = 8))
+        axis.title.y = element_markdown(size=16))
 ggsave('10-rec.png', width = 15, height = 10, dpi = "retina")
 
 g5_waa <- school_waa_stats %>%
@@ -185,8 +186,7 @@ g5_waa %>%
   theme(plot.title = element_markdown(size = 20, hjust = 0.5, face = "bold"),
         plot.subtitle = element_text(size = 13, hjust = 0.5),
         axis.title.x = element_markdown(size=16),
-        axis.title.y = element_markdown(size=16),
-        axis.text = element_markdown(size = 8))
+        axis.title.y = element_markdown(size=16))
 ggsave('11-rec.png', width = 15, height = 10, dpi = "retina")
 
 season_waa_stats <- rec_proj_waa %>%
@@ -203,6 +203,7 @@ season_waa_stats <- rec_proj_waa %>%
 
 season_waa_stats <- season_waa_stats %>%
   mutate(abbr = paste0(abbreviation, substring(season, 3,4)))
+
 
 season_waa_stats %>% 
   ggplot(aes(x = exp_waa, y = waa_oe)) +
@@ -226,7 +227,7 @@ season_waa_stats %>%
   theme_reach() +
   labs(x = "Number of Recruits",
        y = "WAA Over Expected Per Recruit",
-       title = "A Recruiting Class' Size Has Some Affect on Development",
+       title = "A Recruiting Class' Size Has Some Effect on Development",
        subtitle = "Every Power 5 recruiting class since 2014, class is labeled by team and year")
 ggsave('13-rec.png', width = 15, height = 10, dpi = "retina")
 

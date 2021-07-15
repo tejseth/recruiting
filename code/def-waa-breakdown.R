@@ -30,9 +30,9 @@ rec_waa_season_pos %>%
   facet_wrap(~pos, scales = "free") +
   theme_reach() +
   scale_color_brewer(palette = "Set2") +
-  labs(x = "Weight Recruited At",
+  labs(x = "Weight at Time of Recruitment",
        y = "Total WAA in College",
-       title = "How Weight Recruited At Affects Total WAA for Defensive Lineman",
+       title = "How Weight at Time of Recruitment Affects Total WAA for Defensive Lineman",
        subtitle = "2012-2020, WAA = Wins Above Average") +
   theme(strip.text = element_text(size = 14, face = "bold"))
 ggsave('9-rec.png', width = 15, height = 10, dpi = "retina")

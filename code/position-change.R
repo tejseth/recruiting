@@ -2,12 +2,12 @@ same_pos_stats <- recruiting_with_waa_season %>%
   filter(!data.position %in% c("K", "LS", "P", "FB")) %>%
   group_by(data.position) %>%
   summarize(total = n(),
-            `Played Some Position` = sum(same_pos),
-            `Changed Position` = total - `Played Some Position`,
-            same_perc = `Played Some Position` / total)
+            `Played Same Position` = sum(same_pos),
+            `Changed Position` = total - `Played Same Position`,
+            same_perc = `Played Same Position` / total)
 
 same_pos_stats <- same_pos_stats %>%
-  pivot_longer(cols = c(`Played Some Position`, `Changed Position`))
+  pivot_longer(cols = c(`Played Same Position`, `Changed Position`))
 
 same_pos_stats <- same_pos_stats %>%
   mutate(perc = paste0(round(same_perc*100, 1), "%"))

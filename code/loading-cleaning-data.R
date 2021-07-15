@@ -52,6 +52,9 @@ recruiting_data_filtered <- recruiting_data_filtered %>%
 recruiting_with_waa <- recruiting_data_filtered %>%
   filter(!is.na(total_waa))
 
+recruiting_with_waa <- recruiting_with_waa %>% 
+  distinct(data.player, data.player_id, .keep_all = TRUE)
+
 recruiting_with_waa <- recruiting_with_waa %>%
   mutate(same_pos = ifelse(data.position == position, 1, 0))
 
@@ -62,6 +65,7 @@ recruiting_with_waa <- recruiting_with_waa %>%
     data.rating <= 0.8900 & data.rating >= 0.7970 ~ 3,
     data.rating < 0.7970 ~ 2
   ))
+
 
 recruiting_with_waa_season <- recruiting_with_waa %>%
   filter(seasons > 1)
